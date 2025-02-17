@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:singleton_demo/api_service.dart';
+import 'package:singleton_demo/auth_screen.dart';
+import 'package:singleton_demo/auth_service.dart';
 import 'package:singleton_demo/firestore_service.dart';
+import 'package:singleton_demo/home_screen.dart';
 import 'package:singleton_demo/todo.dart';
 
 void main() async {
@@ -37,7 +40,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: AuthService().currentUser != null ? HomeScreen() : AuthScreen(),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
