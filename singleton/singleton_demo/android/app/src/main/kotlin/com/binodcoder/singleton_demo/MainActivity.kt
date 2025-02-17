@@ -1,4 +1,4 @@
-package com.example.singleton_demo
+package com.binodcoder.singleton_demo
 
 import io.flutter.embedding.android.FlutterActivity
 

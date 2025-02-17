@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "180456887660",
+    "project_id": "singleton-demo",
+    "storage_bucket": "singleton-demo.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180456887660:android:ac6bae34e6ff1aa6c78f49",
+        "android_client_info": {
+          "package_name": "com.binodcoder.singleton_demo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnlkUuJlX_JKkjqsy8wlXvQrhKzcaecM0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

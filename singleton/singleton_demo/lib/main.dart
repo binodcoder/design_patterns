@@ -1,8 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:singleton_demo/api_service.dart';
+import 'package:singleton_demo/firestore_service.dart';
 import 'package:singleton_demo/todo.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -70,6 +74,17 @@ class _MyHomePageState extends State<MyHomePage> {
   //   });
   // }
 
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+
+  void _addUser() async {
+    if (_nameController.text.isNotEmpty && _ageController.text.isNotEmpty) {
+      await FirestoreService().addUser(_nameController.text, int.parse(_ageController.text));
+      _nameController.clear();
+      _ageController.clear();
+    }
+  }
+
   String? _title = "Fetchng data ...";
   void _fetchData() async {
     try {
@@ -127,6 +142,46 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               _title ?? "Title is not available",
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: _nameController,
+                decoration: InputDecoration(labelText: "Name"),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: _ageController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(labelText: "Age"),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: _addUser,
+              child: Text("Add User"),
+            ),
+            Expanded(
+              child: StreamBuilder<List<Map<String, dynamic>>>(
+                stream: FirestoreService().getUsers(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+
+                  var users = snapshot.data!;
+                  return ListView.builder(
+                    itemCount: users.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(users[index]['name']),
+                        subtitle: Text("Age: ${users[index]['age']}"),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),
