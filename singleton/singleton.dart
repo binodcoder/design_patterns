@@ -6,5 +6,13 @@ class Singleton {
   }
   Singleton._internal();
 }
- 
 
+class Database {
+  static final Database _instance = Database._internal();
+
+  Database._internal();
+
+  factory Database() {
+    return _instance;
+  }
+}
